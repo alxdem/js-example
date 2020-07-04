@@ -1,0 +1,253 @@
+@import "../../config.styl"
+
+.filter-donors
+  variable-property('margin-top', 60, 148)
+  variable-property('margin-bottom', 100, 230)
+  overflow hidden
+  position relative
+  width 100%
+
+  &__wrapper
+    max-width 1554px
+    position relative
+    margin 0 auto
+    variable-property('padding-left', 20, 80, $breakpoint__min, $breakpoint__tablet)
+    variable-property('padding-right', 20, 80, $breakpoint__min, $breakpoint__tablet)
+
+  &__button-aside
+    position relative
+    display none
+
+    +mq($breakpoint__desktop)
+      display block
+      variable-property('margin-bottom', 15, 30, $breakpoint__min, $breakpoint__desktop)
+
+  &__block
+    display flex
+    flex-direction row-reverse
+    justify-content flex-end
+    position relative
+
+    +mq($breakpoint__desktop)
+      overflow hidden
+
+  &__sidebar
+    padding-right 55px
+    position relative
+    background-color $color__white
+
+    +mq($breakpoint__desktop)
+      margin-left -415px
+      transition margin-left ease-out 0.3s
+
+      &&_active
+        margin-left 0
+
+    +mq($breakpoint__phone)
+      position absolute
+      margin-left 0
+      padding-right 0
+      top 0
+      left -100%
+      width 100%
+      height 100%
+      transition left ease-out 0.3s
+
+      &&_active
+        left 0
+
+  &__sidebar-title
+    font-size 24px
+    line-height 34px
+    letter-spacing 0.02em
+    color $color__gray_700
+    font-weight bold
+    margin-bottom 10px
+    width 360px
+    flex-shrink 0
+
+  &__top
+    padding 0 10px
+
+  &__data
+    width 100px
+    flex-grow 1
+    align-self flex-start
+    variable-property('padding', 15, 27)
+
+  &__sidebar-range-wrapper
+    padding 0 10px 20px
+
+  &__sidebar-label
+    font-size 18px
+    line-height 26px
+    font-weight 700
+    color $color__gray_700
+    letter-spacing 0.02em
+    margin-bottom 18px
+
+  &__sidebar-range
+    //margin-bottom 20px
+
+  &__sidebar-item
+    //
+
+    &:not(:last-of-type)
+      margin-bottom 30px
+
+    &&_border
+      padding-bottom 15px
+      margin-bottom 12px
+      border-bottom 1px solid $color__gray_300
+
+  &__sidebar-list
+    display flex
+    flex-wrap wrap
+    margin 0 -11px -11px
+
+  &__sidebar-list-item
+    padding 0 11px
+    margin-bottom 11px
+    flex-shrink 0
+
+  &__sidebar-list-vertical
+    display block
+
+  &__sidebar-list-item-vertical
+    //
+    &:not(:last-child)
+      margin-bottom 10px
+
+  &__title
+    variable-property('font-size', 20, 32)
+    variable-property('line-height', 28, 42)
+    color $color__gray_700
+    letter-spacing 0.02em
+    font-family $fontMain
+    margin-bottom 10px
+
+    &&_noresult
+      variable-property('margin-bottom', 15, 21)
+
+  &__text
+    variable-property('font-size', 16, 18)
+    variable-property('line-height', 26, 28)
+    color $color__gray_700
+    letter-spacing 0.02em
+    max-width 688px
+
+  &__submit
+    min-width 180px
+    variable-property('margin-top', 25, 45)
+    margin-bottom 15px
+
+    +mq($breakpoint__phone)
+      width 100%
+
+  &__header
+    display flex
+    padding 0 5px
+    height 52px
+
+  &__header-item
+    font-weight 700
+    variable-property('font-size', 16, 18)
+    variable-property('line-height', 26, 28)
+    color $color__gray_700
+    letter-spacing 0.02em
+    align-items center
+    padding 0 5px
+    display flex
+    flex-shrink 0
+    flex-grow 1
+
+    &:nth-child(1)
+      width 100px
+
+    &:nth-child(2)
+      width 100px
+
+    &:nth-child(3)
+      width 100px
+
+    &:nth-child(4)
+      width 120px
+
+    &:nth-child(5)
+      width 125px
+
+    &:nth-child(6)
+      width 160px
+
+    &:nth-child(7)
+      width 160px
+
+  &__outer
+    overflow-y hidden
+
+  &__inner
+    variable-property('margin-top', 25, 50)
+    min-width 860px
+
+  &__item
+    padding 0 10px
+    transition background-color ease-out 0.15s
+
+    &:hover
+      background-color $color__white
+
+  &__noresult
+    display flex
+    align-items center
+    min-width 440px
+
+    +mq($breakpoint__desktop)
+      min-width 820px
+
+    +mq($breakpoint__tablet)
+      min-width 610px
+
+    +mq($breakpoint__phablet)
+      flex-direction column
+      min-width 440px
+
+    +mq($breakpoint__phone)
+      min-width auto
+
+  &__noresult-left
+    flex-grow 1
+
+  &__noresult-right
+    padding-left 30px
+    flex-shrink 0
+
+    +mq($breakpoint__phablet)
+      padding-left 0
+      flex-grow 1
+      margin-top 30px
+
+  &__button-sign
+    width 180px
+
+  &__loader
+    position relative
+    width 100%
+    height 200px
+    display none
+    justify-content center
+
+    &&_active
+      display flex
+
+    .app.app_mode_color_bw &, .app.app_mode_color_invert &, .app.app_mode_color_sepia &
+      display none
+
+  &__preloader-video
+    max-height 100%
+
+  &__reset
+    min-width 180px
+    margin-bottom 15px
+
+    +mq($breakpoint__phone)
+      width 100%

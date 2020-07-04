@@ -1,0 +1,151 @@
+mixin filter-donors($dataFilter, $dataResult, $class)
+    -
+        $btnResetText = $dataFilter['filter_clear_title'];
+    .filter-donors(class=$class)
+        .filter-donors__wrapper
+            button.filter-donors__button-aside.button.button__color_primary.button__type_big(type='button')!=$dataFilter['filter_button_title']
+            .filter-donors__block
+                .filter-donors__data(style='background-color:'.$dataResult['color'] data-page=$content['donors']['current_page'] data-pages=$content['donors']['last_page'])
+                    if(is_iterable($dataResult['data']) && !empty($dataResult['data']))
+                        .filter-donors__top
+                            .filter-donors__title!=$dataResult['found_title']
+                            .filter-donors__text!=$dataResult['with_parameters']
+
+                        .filter-donors__outer
+                            .filter-donors__inner
+                                ul.filter-donors__header
+                                    for $text in $dataResult['table_column_titles']
+                                        li.filter-donors__header-item!=$text
+
+                                ul.filter-donors__list
+                                    for $card in $dataResult['data']
+                                        li.filter-donors__item
+                                            +card-donor($card, 'filter-donors__card')
+
+                        .filter-donors__loader
+                            +preloader()
+
+                    else
+                        .filter-donors__noresult
+                            .filter-donors__noresult-left
+                                .filter-donors__title.filter-donors__title_noresult!=$dataResult['empty_title']
+                                .filter-donors__text!=$dataResult['empty_text']
+
+                            .filter-donors__noresult-right
+                                a.filter-donors__button-sign.button.button__type_big.button__color_primary(href='#appointment' data-modal-open)!=$dataResult['appointment_button_title']
+
+                .filter-donors__sidebar
+                    form.filter-donors__form(name='filter-donors' action=$domain.$content['form_action'])
+                        .filter-donors__sidebar-title!=$dataFilter['filter_title']
+                        -$params = $dataFilter['PARAMS']
+
+                        if($params['HEIGHT'])
+                            .filter-donors__sidebar-item
+                                .filter-donors__sidebar-label!=$params['HEIGHT']['NAME']
+
+                                .filter-donors__sidebar-range-wrapper
+                                    +range($params['HEIGHT'], 'filter-donors__sidebar-range')
+
+                        if($params['WEIGHT'])
+                            .filter-donors__sidebar-item
+                                .filter-donors__sidebar-label!=$params['WEIGHT']['NAME']
+
+                                .filter-donors__sidebar-range-wrapper
+                                    +range($params['WEIGHT'], 'filter-donors__sidebar-range')
+
+                        if($params['EYE_COLOR'])
+                            .filter-donors__sidebar-item
+                                .filter-donors__sidebar-label!=$params['EYE_COLOR']['NAME']
+
+                                ul.filter-donors__sidebar-list
+                                    input.filter-donors__input-hidden(type='hidden' name=$params['EYE_COLOR']['CONTROL_NAME'].'[]')
+                                    - $itemBloodCurrent = $params['EYE_COLOR']['VALUE']
+                                    for $item in $params['EYE_COLOR']['VALUES']
+
+                                        if(is_array($itemBloodCurrent))
+                                            -$bChecked = (array_key_exists($item['id'], $itemBloodCurrent))
+
+                                        else
+                                            -$bChecked = ($item['id'] == $itemBloodCurrent)
+
+                                        li.filter-donors__sidebar-list-item
+                                            +filter-label-color($item, $params['EYE_COLOR']['CONTROL_NAME'].'[]', 'filter-donors__sidebar-checkbox', $bChecked)
+
+                        if($params['HAIR_COLOR'])
+                            .filter-donors__sidebar-item
+                                .filter-donors__sidebar-label!=$params['HAIR_COLOR']['NAME']
+
+                                ul.filter-donors__sidebar-list
+                                    input.filter-donors__input-hidden(type='hidden' name=$params['HAIR_COLOR']['CONTROL_NAME'].'[]')
+                                    - $itemBloodCurrent = $params['HAIR_COLOR']['VALUE']
+                                    for $item in $params['HAIR_COLOR']['VALUES']
+
+                                        if(is_array($itemBloodCurrent))
+                                            -$bChecked = (array_key_exists($item['id'], $itemBloodCurrent))
+
+                                        else
+                                            -$bChecked = ($item['id'] == $itemBloodCurrent)
+
+                                        li.filter-donors__sidebar-list-item
+                                            +filter-label-color($item, $params['HAIR_COLOR']['CONTROL_NAME'].'[]', 'filter-donors__sidebar-checkbox', $bChecked)
+
+                        if($params['BLOOD_GROUP'])
+                            .filter-donors__sidebar-item.filter-donors__sidebar-item_border
+                                .filter-donors__sidebar-label!=$params['BLOOD_GROUP']['NAME']
+
+                                ul.filter-donors__sidebar-list
+                                    - $itemBloodCurrent = $params['BLOOD_GROUP']['VALUE']
+                                    input.filter-donors__input-hidden(type='hidden' name=$params['BLOOD_GROUP']['CONTROL_NAME'].'[]')
+                                    for $item in $params['BLOOD_GROUP']['VALUES']
+                                        if(is_array($itemBloodCurrent))
+                                            -$bChecked = (array_key_exists($item['id'], $itemBloodCurrent))
+
+                                        else
+                                            -$bChecked = ($item['id'] == $itemBloodCurrent)
+
+                                        li.filter-donors__sidebar-list-item
+                                            +filter-label-blood($item, $params['BLOOD_GROUP']['CONTROL_NAME'].'[]', 'filter-donors__sidebar-checkbox-blood', $bChecked)
+
+                        if($params['RH_FACTOR'])
+                            .filter-donors__sidebar-item
+
+                                input.filter-donors__input-hidden(type='hidden' name=$params['RH_FACTOR']['CONTROL_NAME'].'[]')
+                                ul.filter-donors__sidebar-list
+                                    for $item in $params['RH_FACTOR']['VALUES']
+                                        li.filter-donors__sidebar-list-item
+                                            +filter-label-blood($item, $params['RH_FACTOR']['CONTROL_NAME'].'[]', 'filter-donors__sidebar-checkbox-blood')
+
+                        if($params['EDUCATION'])
+                            .filter-donors__sidebar-item
+                                .filter-donors__sidebar-label!=$params['EDUCATION']['NAME']
+
+                                input.filter-donors__input-hidden(type='hidden' name=$params['EDUCATION']['CONTROL_NAME'].'[]')
+                                ul.filter-donors__sidebar-list-vertical
+                                    for $item in $params['EDUCATION']['VALUES']
+                                        li.filter-donors__sidebar-list-item-vertical
+                                            +filter-label-blood($item, $params['EDUCATION']['CONTROL_NAME'].'[]', 'filter-donors__sidebar-checkbox-education')
+
+                        if($params['WITH_PHOTOS'] && $params['WITH_PHOTOS']['VISIBLE'])
+                            .filter-donors__sidebar-item
+                                input(type='hidden' name=$params['WITH_PHOTOS']['CONTROL_NAME'] value='')
+                                ul.filter-donors__sidebar-list-vertical
+                                    for $item in $params['WITH_PHOTOS']['VALUES']
+                                        - $itemBloodCurrent = $params['WITH_PHOTOS']['VALUE'];
+                                        -$bChecked = ($item['id'] == $itemBloodCurrent);
+                                        li.filter-donors__sidebar-list-item-vertical
+                                            +filter-label-blood($item, $params['WITH_PHOTOS']['CONTROL_NAME'], 'filter-donors__sidebar-checkbox-is-photo', $bChecked)
+
+
+                        button.filter-donors__submit.button.button__type_big.button__color_primary(type='submit')!=$dataFilter['find_button_title']
+                        button.filter-donors__reset.button.button__type_big.button__color_primary(type='reset')!=$btnResetText
+
+
+
+
+
+
+
+
+
+
+
